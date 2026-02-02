@@ -1,4 +1,4 @@
-# Sky130 GPIO Config
+# GPIO Configuration for OpenFrame
 
 A simple parameterized GPIO pad configuration wrapper for ChipFoundry Openframe projects.
 
@@ -8,7 +8,7 @@ A simple parameterized GPIO pad configuration wrapper for ChipFoundry Openframe 
 
 ```verilog
 // GPIO as OUTPUT
-sky130_gpio_config #(.MODE(3'd4)) gpio_out_inst (
+CF_gpio_config #(.MODE(3'd4)) gpio_out_inst (
   .io_out(my_data_out),
   .io_in(),
   .io_oeb(1'b0),
@@ -28,7 +28,7 @@ sky130_gpio_config #(.MODE(3'd4)) gpio_out_inst (
 );
 
 // GPIO as INPUT with pull-up
-sky130_gpio_config #(.MODE(3'd3)) gpio_in_inst (
+CF_gpio_config #(.MODE(3'd3)) gpio_in_inst (
   .io_out(1'b0),
   .io_in(my_data_in),
   .io_oeb(1'b1),
@@ -85,9 +85,9 @@ Connect these to your `openframe_project_wrapper` signals:
 ## Files
 
 ```
-sky130_gpio_config/
+CF_gpio_config/
   rtl/
-    sky130_gpio_config.v   # Main wrapper module
+    CF_gpio_config.v   # Main wrapper module
   docs/
     USAGE.md               # Detailed usage guide
     SIGNAL_MAPPING.md      # Mode-to-signal reference
