@@ -1,6 +1,6 @@
 # Sky130 GPIO Config
 
-A simple parameterized GPIO pad configuration wrapper for Efabless Openframe projects.
+A simple parameterized GPIO pad configuration wrapper for ChipFoundry Openframe projects.
 
 **Set the mode once, forget about pad details.**
 
