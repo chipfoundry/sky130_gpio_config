@@ -1,0 +1,30 @@
+---
+info:
+  name: sky130_gpio_config
+  description: Sky130 GPIO Config, compatible with Sky130 GPIO specification for ChipFoundry Openframe projects.
+  repo: github.com/chipfoundry/sky130_gpio_config
+  owner: ChipFoundry, a DBA of Umbralogic Technologies LLC
+  license: APACHE 2.0
+  author: ChipFoundry, a DBA of Umbralogic Technologies LLC
+  email: info@chipfoundry.com
+  email: ip_admin@chipfoundry.com
+  version: v1.0.0
+  date: 02-02-2026
+  category: digital
+  tags:
+    - io
+    - gpio
+    - config
+  bus:
+    - generic
+  type: soft
+  status: verified
+  cell_count: n/a
+  width: "0.0"
+  height: "0.0"
+  technology: n/a
+  clock_freq_mhz: n/a
+  digital_supply_voltage: n/a
+  analog_supply_voltage: n/a
+  irq_reg_offset: n/a
+  fifo_reg_offset: n/a

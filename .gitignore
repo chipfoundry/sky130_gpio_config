@@ -1,0 +1,41 @@
+# Simulation outputs
+*.vcd
+*.fst
+*.lxt
+*.lxt2
+*.vvp
+*.log
+
+# Synthesis outputs
+*.edif
+*.blif
+*.json
+*.sdf
+
+# Build directories
+build/
+sim/
+work/
+xsim.dir/
+
+# IDE/Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Coverage
+*.dat
+coverage/
