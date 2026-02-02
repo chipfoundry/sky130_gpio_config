@@ -2,18 +2,18 @@
 
 ## Overview
 
-`sky130_gpio_config` is a simple parameterized wrapper that configures Sky130 GPIO pads for Efabless Openframe projects. You set the `MODE` parameter at instantiation, and the module generates all the required pad configuration signals.
+`CF_gpio_config` is a simple parameterized wrapper that configures Sky130 GPIO pads for Efabless Openframe projects. You set the `MODE` parameter at instantiation, and the module generates all the required pad configuration signals.
 
 ## Basic Usage
 
 ### Step 1: Add RTL to your project
 
-Include `rtl/sky130_gpio_config.v` in your design.
+Include `rtl/CF_gpio_config.v` in your design.
 
 ### Step 2: Instantiate one module per GPIO
 
 ```verilog
-sky130_gpio_config #(
+CF_gpio_config #(
   .MODE(3'd4)  // OUTPUT mode
 ) gpio_inst (
   // User interface
@@ -60,7 +60,7 @@ For driving outputs like LEDs or control signals:
 ```verilog
 wire led_data;
 
-sky130_gpio_config #(.MODE(3'd4)) gpio_led (
+CF_gpio_config #(.MODE(3'd4)) gpio_led (
   .io_out(led_data),
   .io_in(),
   .io_oeb(1'b0),
@@ -78,7 +78,7 @@ For buttons that pull low when pressed:
 ```verilog
 wire button_pressed;
 
-sky130_gpio_config #(.MODE(3'd3)) gpio_button (
+CF_gpio_config #(.MODE(3'd3)) gpio_button (
   .io_out(1'b0),             // Unused - wrapper drives 1 for pull-up
   .io_in(button_pressed),    // Will be 1 when idle, 0 when pressed
   .io_oeb(1'b1),             // Unused - wrapper drives oeb=0 to enable weak pull
@@ -103,7 +103,7 @@ wire sda_out;
 wire sda_in;
 wire sda_oeb;  // 0 = driving, 1 = reading
 
-sky130_gpio_config #(.MODE(3'd5)) gpio_sda (
+CF_gpio_config #(.MODE(3'd5)) gpio_sda (
   .io_out(sda_out),
   .io_in(sda_in),
   .io_oeb(sda_oeb),
@@ -121,7 +121,7 @@ For analog functions:
 ```verilog
 wire [1:0] analog_config;  // {sel, pol}
 
-sky130_gpio_config #(.MODE(3'd0)) gpio_analog (
+CF_gpio_config #(.MODE(3'd0)) gpio_analog (
   .io_out(1'b0),
   .io_in(),
   .io_oeb(1'b1),
@@ -139,7 +139,7 @@ For arrays of GPIOs with the same mode:
 genvar i;
 generate
   for (i = 0; i < 8; i = i + 1) begin : gpio_outputs
-    sky130_gpio_config #(.MODE(3'd4)) gpio_inst (
+    CF_gpio_config #(.MODE(3'd4)) gpio_inst (
       .io_out(my_outputs[i]),
       .io_in(),
       .io_oeb(1'b0),

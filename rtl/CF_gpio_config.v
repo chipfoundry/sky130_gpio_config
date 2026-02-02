@@ -1,5 +1,5 @@
 //=============================================================================
-// Module: sky130_gpio_config
+// Module: CF_gpio_config
 // Description: Sky130 GPIO Pad Configuration Wrapper for Efabless Openframe
 //              Simple parameterized module - set MODE and forget about pad details
 // License: Apache 2.0
@@ -7,7 +7,7 @@
 
 `default_nettype none
 
-module sky130_gpio_config #(
+module CF_gpio_config #(
   parameter [2:0] MODE = 3'd1  // 0=ANALOG, 1=INPUT, 2=INPUT_PD, 3=INPUT_PU, 4=OUTPUT, 5=BIDIR
 )(
   //-------------------------------------------------------------------------
