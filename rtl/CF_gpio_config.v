@@ -77,7 +77,9 @@ module CF_gpio_config #(
   // Input Disable
   //-------------------------------------------------------------------------
   // Disable input buffer for ANALOG and OUTPUT modes (not reading pad)
-  assign gpio_inp_dis = (MODE == MODE_ANALOG) || (MODE == MODE_OUTPUT);
+  assign gpio_inp_dis = (MODE == MODE_ANALOG) ? 1'b1 :  // Disable input buffer for analog mode
+                        (MODE == MODE_OUTPUT) ? 1'b1 :  // Disable input buffer for output mode
+                        1'b0;                           // Enable input buffer
 
   //-------------------------------------------------------------------------
   // Output Enable Bar (active low: 0=driving, 1=hi-z)
