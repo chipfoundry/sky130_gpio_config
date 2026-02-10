@@ -43,7 +43,7 @@ CF_gpio_config #(.MODE(3'd3)) gpio_in_inst (
 ## Modes
 
 | MODE | Name | gpio_dm | gpio_oeb_out | gpio_out_val | Description |
-|------|------|---------|--------------|--------------|-------------|
+|:----:|------|:-------:|:------------:|:------------:|-------------|
 | 0 | ANALOG | 000 | 1 | 0 | Analog mode - disables input and output buffers |
 | 1 | INPUT | 001 | 1 | 0 | Digital input, no pull resistor (floating) |
 | 2 | INPUT_PD | 111 | 0 | 0 | Digital input with pull-down (~5kΩ) |
