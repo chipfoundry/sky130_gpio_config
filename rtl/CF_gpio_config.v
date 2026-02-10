@@ -16,7 +16,7 @@ module CF_gpio_config #(
   input  wire        io_out,       // Data to drive pad (used in OUTPUT/BIDIR modes)
   output wire        io_in,        // Data from pad (directly from gpio_in)
   input  wire        io_oeb,       // Output enable bar (BIDIR mode: 0=drive, 1=hi-z)
-  input  wire [1:0]  analog,       // {analog_sel, analog_pol} for ANALOG mode
+  input  wire        analog,       // {analog_sel, analog_pol} for ANALOG mode
 
   //-------------------------------------------------------------------------
   // Openframe Interface - From openframe_project_wrapper
@@ -42,7 +42,7 @@ module CF_gpio_config #(
   //-------------------------------------------------------------------------
   // Mode Definitions
   //-------------------------------------------------------------------------
-  localparam [2:0] MODE_ANALOG   = 3'd0;  // Analog mode - connects to AMUXBUS
+  localparam [2:0] MODE_ANALOG   = 3'd0;  // Analog mode - input/output disabled
   localparam [2:0] MODE_INPUT    = 3'd1;  // Digital input, no pull resistor
   localparam [2:0] MODE_INPUT_PD = 3'd2;  // Digital input with pull-down
   localparam [2:0] MODE_INPUT_PU = 3'd3;  // Digital input with pull-up
@@ -95,15 +95,11 @@ module CF_gpio_config #(
                         1'b1;
 
   //-------------------------------------------------------------------------
-  // Analog Signals
-  //-------------------------------------------------------------------------
-  assign gpio_analog_en  = (MODE == MODE_ANALOG);
-  assign gpio_analog_sel = (MODE == MODE_ANALOG) ? analog[1] : 1'b0;
-  assign gpio_analog_pol = (MODE == MODE_ANALOG) ? analog[0] : 1'b0;
-
-  //-------------------------------------------------------------------------
   // Fixed Configuration (safe defaults for all modes)
   //-------------------------------------------------------------------------
+  assign gpio_analog_en   = 1'b0;  // Enable amuxbus_a/b for ground/power
+  assign gpio_analog_sel  = 1'b0;  // Choose amuxbus_a (0) or amuxbus_b (1)
+  assign gpio_analog_pol  = 1'b0;  // Use amuxbus_a/b as ground (0) or power (1)
   assign gpio_ib_mode_sel = 1'b0;  // Input buffer mode: VDDIO
   assign gpio_vtrip_sel   = 1'b0;  // Trip point: CMOS
   assign gpio_slow_sel    = 1'b0;  // Slew rate: fast
