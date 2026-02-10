@@ -22,6 +22,8 @@ CF_gpio_config #(
   .io_oeb(),                   // Unused for INPUT/OUTPUT
   
   // From openframe
+  .gpio_zero(gpio_loopback_zero[N]),
+  .gpio_one(gpio_loopback_one[N]),
   .gpio_in(gpio_in[N]),
   
   // To openframe pad config
@@ -63,6 +65,8 @@ CF_gpio_config #(.MODE(3'd4)) gpio_led (
   .io_out(led_data),
   .io_in(),                     // Unused in output mode
   .io_oeb(),                    // Unused - wrapper drives 0
+  .gpio_zero(gpio_loopback_zero[10]),
+  .gpio_one(gpio_loopback_one[10]),
   .gpio_in(gpio_in[10]),
   .gpio_out_val(gpio_out[10]),  // gpio_out_val passes through io_out
   // ... other config outputs
@@ -80,6 +84,8 @@ CF_gpio_config #(.MODE(3'd3)) gpio_button (
   .io_out(),                 // Unused - wrapper drives 1 for pull-up, 0 for pull-down
   .io_in(button_pressed),    // Will be 1 when idle, 0 when pressed
   .io_oeb(),                 // Unused - wrapper drives oeb=0 to enable weak pull
+  .gpio_zero(gpio_loopback_zero[11]),
+  .gpio_one(gpio_loopback_one[11]),
   .gpio_in(gpio_in[11]),
   .gpio_out_val(gpio_out[11]),  // Drives 1 to activate ~5kΩ pull-up, 0 to activate ~5KΩ pull-down
   // ... other config outputs
@@ -104,6 +110,8 @@ CF_gpio_config #(.MODE(3'd5)) gpio_sda (
   .io_out(sda_out),
   .io_in(sda_in),
   .io_oeb(sda_oeb),
+  .gpio_zero(gpio_loopback_zero[12]),
+  .gpio_one(gpio_loopback_one[12]),
   .gpio_in(gpio_in[12]),
   .gpio_out_val(gpio_out[12]),  // Passes through sda_out
   // ... other config outputs
@@ -120,6 +128,8 @@ CF_gpio_config #(.MODE(3'd0)) gpio_analog (
   .io_out(),            // Unused in analog mode
   .io_in(),             // Unused in analog mode
   .io_oeb(),            // Unused in analog mode
+  .gpio_zero(gpio_loopback_zero[13]),
+  .gpio_one(gpio_loopback_one[13]),
   .gpio_in(gpio_in[13]),
   // ... config outputs
 );
@@ -137,6 +147,8 @@ generate
       .io_out(my_outputs[i]),
       .io_in(),
       .io_oeb(),
+      .gpio_zero(gpio_loopback_zero[i+10]),
+      .gpio_one(gpio_loopback_one[i+10]),
       .gpio_in(gpio_in[i+10]),
       .gpio_dm({gpio_dm2[i+10], gpio_dm1[i+10], gpio_dm0[i+10]}),
       .gpio_inp_dis(gpio_inp_dis[i+10]),
@@ -165,3 +177,5 @@ endgenerate
 3. **No runtime reconfiguration**: The MODE is set at synthesis time via parameter. If you need runtime mode changes, use the register-based core instead.
 
 4. **Pull resistor implementation**: The Sky130 GPIO pad implements pull resistors using weak output drivers. This is why INPUT_PD and INPUT_PU modes have `oeb=0` - the output driver must be enabled in weak mode to provide the pull.
+
+5. **Verilog constants**: Avoid using verilog constants such as 1`b0 or 1`b1 because they require synthesis.
