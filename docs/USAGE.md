@@ -178,4 +178,4 @@ endgenerate
 
 4. **Pull resistor implementation**: The Sky130 GPIO pad implements pull resistors using weak output drivers. This is why INPUT_PD and INPUT_PU modes have `oeb=0` - the output driver must be enabled in weak mode to provide the pull.
 
-5. **Verilog constants**: Avoid using verilog constants such as 1`b0 or 1`b1 because they require synthesis.
+5. **Verilog constants**: Avoid using verilog constants such as `1'b0` or `1'b1` because they require synthesis.
