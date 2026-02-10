@@ -12,8 +12,8 @@ CF_gpio_config #(.MODE(3'd4)) gpio_out_inst (
   .io_out(my_data_out),
   .io_in(),
   .io_oeb(),
-  .gpio_low(gpio_loopback_zero[5]),
-  .gpio_high(gpio_loopback_one[5]),
+  .gpio_zero(gpio_loopback_zero[5]),
+  .gpio_one(gpio_loopback_one[5]),
   .gpio_in(gpio_in[5]),
   .gpio_dm({gpio_dm2[5], gpio_dm1[5], gpio_dm0[5]}),
   .gpio_inp_dis(gpio_inp_dis[5]),
@@ -33,8 +33,8 @@ CF_gpio_config #(.MODE(3'd3)) gpio_in_inst (
   .io_out(),
   .io_in(my_data_in),
   .io_oeb(),
-  .gpio_low(gpio_loopback_zero[6]),
-  .gpio_high(gpio_loopback_one[6]),
+  .gpio_zero(gpio_loopback_zero[6]),
+  .gpio_one(gpio_loopback_one[6]),
   .gpio_in(gpio_in[6]),
   // ... connect config outputs (including gpio_out_val for pull-up)
 );
@@ -65,8 +65,8 @@ Connect these to your `openframe_project_wrapper` signals:
 
 | Signal | Connect to |
 |--------|------------|
-| `gpio_low` | `gpio_loopback_low[n]` |
-| `gpio_high` | `gpio_loopback_high[n]` |
+| `gpio_zero` | `gpio_loopback_zero[n]` |
+| `gpio_one` | `gpio_loopback_one[n]` |
 | `gpio_in` | `gpio_in[n]` |
 | `gpio_dm[2:0]` | `{gpio_dm2[n], gpio_dm1[n], gpio_dm0[n]}` |
 | `gpio_inp_dis` | `gpio_inp_dis[n]` |
