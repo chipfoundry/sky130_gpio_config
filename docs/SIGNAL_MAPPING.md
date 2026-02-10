@@ -3,11 +3,11 @@
 ## Mode-to-Signal Truth Table
 
 | MODE | Name | dm[2:0] | inp_dis | oeb | out_val |
-|------|------|---------|---------|-----|---------|
+|:----:|------|:-------:|:-------:|:---:|:-------:|
 | 0 | ANALOG | 000 | 1 | 1 | 0 |
 | 1 | INPUT | 001 | 0 | 1 | 0 |
-| 2 | INPUT_PD | 011 | 0 | 0 | 0 |
-| 3 | INPUT_PU | 010 | 0 | 0 | 1 |
+| 2 | INPUT_PD | 111 | 0 | 0 | 0 |
+| 3 | INPUT_PU | 111 | 0 | 0 | 1 |
 | 4 | OUTPUT | 110 | 1 | 0 | io_out |
 | 5 | BIDIR | 110 | 0 | io_oeb | io_out |
 
@@ -18,7 +18,7 @@
 These signals are set to safe defaults for all modes:
 
 | Signal | Value | Description |
-|--------|-------|-------------|
+|--------|:-----:|-------------|
 | `gpio_analog_en` | 0 | Enable amuxbus_a/b as ground/power output |
 | `gpio_analog_sel` | 0 | Choose amuxbus_a or amuxbus_b for ground/power |
 | `gpio_analog_pol` | 0 | Choose ground or power for amuxbus_a/b |
@@ -32,23 +32,22 @@ These signals are set to safe defaults for all modes:
 The `dm[2:0]` signal controls the Sky130 pad's output driver. The Sky130 GPIO uses `bufif1` primitives with specific drive strengths:
 
 | dm[2:0] | Description | Effect with oeb=0 | Use |
-|---------|-------------|-------------------|-----|
+|:-------:|-------------|-------------------|-----|
 | 000 | Hi-Z | Disabled | Analog mode |
 | 001 | Input only | No output driver | Digital input, no pull |
-| 010 | pull1, strong0 | out=1 gives weak pull-up | INPUT_PU (with oeb=0, out=1) |
-| 011 | strong1, pull0 | out=0 gives weak pull-down | INPUT_PD (with oeb=0, out=0) |
+| 111 | pull1, pull0 | weak pull-pull  | INPUT_PU (with out=1), INPUT_PD (with out=0)|
 | 110 | strong1, strong0 | Strong push-pull | OUTPUT, BIDIR |
 
 **How pull resistors work:**
-- **Pull-UP (INPUT_PU):** dm=010, oeb=0, out=1 → weak drive to 1 (~5kΩ pull-up)
-- **Pull-DOWN (INPUT_PD):** dm=011, oeb=0, out=0 → weak drive to 0 (~5kΩ pull-down)
+- **Pull-UP (INPUT_PU):** dm=111, oeb=0, out=1 → weak drive to 1 (~5kΩ pull-up)
+- **Pull-DOWN (INPUT_PD):** dm=111, oeb=0, out=0 → weak drive to 0 (~5kΩ pull-down)
 
 ## Signal Descriptions
 
 ### User Interface Signals
 
 | Signal | Width | Direction | Description |
-|--------|-------|-----------|-------------|
+|--------|:-----:|-----------|-------------|
 | `io_out` | 1 | input | Data to drive the pad. Connect your output signal here. |
 | `io_in` | 1 | output | Data from the pad. Direct passthrough from gpio_in. |
 | `io_oeb` | 1 | input | Output enable bar. Only used in BIDIR mode. 0=drive, 1=hi-z. |
@@ -56,7 +55,7 @@ The `dm[2:0]` signal controls the Sky130 pad's output driver. The Sky130 GPIO us
 ### Openframe Interface Signals
 
 | Signal | Width | Direction | Connect to |
-|--------|-------|-----------|------------|
+|--------|:-----:|-----------|------------|
 | `gpio_zero` | 1 | input | `gpio_loopback_zero[n]` |
 | `gpio_one` | 1 | input | `gpio_loopback_one[n]` |
 | `gpio_in` | 1 | input | `gpio_in[n]` |
@@ -89,14 +88,14 @@ The `dm[2:0]` signal controls the Sky130 pad's output driver. The Sky130 GPIO us
 
 - Digital input buffer enabled (`inp_dis=0`)
 - Output driver enabled for weak pull (`oeb=0`, `out=0`)
-- Drive mode set for weak 0 (`dm=011`)
+- Weak push-pull driver (`dm=111`)
 - Pad defaults low (~5kΩ pull-down) when not driven externally
 
 ### INPUT_PU (MODE=3)
 
 - Digital input buffer enabled (`inp_dis=0`)
 - Output driver enabled for weak pull (`oeb=0`, `out=1`)
-- Drive mode set for weak 1 (`dm=010`)
+- Weak push-pull driver (`dm=111`)
 - Pad defaults high (~5kΩ pull-up) when not driven externally
 
 ### OUTPUT (MODE=4)
