@@ -12,7 +12,6 @@ CF_gpio_config #(.MODE(3'd4)) gpio_out_inst (
   .io_out(my_data_out),
   .io_in(),
   .io_oeb(1'b0),
-  .analog(2'b00),
   .gpio_in(gpio_in[5]),
   .gpio_dm({gpio_dm2[5], gpio_dm1[5], gpio_dm0[5]}),
   .gpio_inp_dis(gpio_inp_dis[5]),
@@ -32,7 +31,6 @@ CF_gpio_config #(.MODE(3'd3)) gpio_in_inst (
   .io_out(1'b0),
   .io_in(my_data_in),
   .io_oeb(1'b1),
-  .analog(2'b00),
   .gpio_in(gpio_in[6]),
   // ... connect config outputs (including gpio_out_val for pull-up)
 );
@@ -42,7 +40,7 @@ CF_gpio_config #(.MODE(3'd3)) gpio_in_inst (
 
 | MODE | Name | dm | oeb | Description |
 |------|------|----|-----|-------------|
-| 0 | ANALOG | 000 | 1 | Analog mode - connects pad to AMUXBUS |
+| 0 | ANALOG | 000 | 1 | Analog mode - disables input and output buffers |
 | 1 | INPUT | 001 | 1 | Digital input, no pull resistor (floating) |
 | 2 | INPUT_PD | 011 | 0 | Digital input with pull-down (~5kΩ) |
 | 3 | INPUT_PU | 010 | 0 | Digital input with pull-up (~5kΩ) |
@@ -56,7 +54,6 @@ CF_gpio_config #(.MODE(3'd3)) gpio_in_inst (
 | `io_out` | input | Data to drive the pad (OUTPUT/BIDIR modes) |
 | `io_in` | output | Data from the pad |
 | `io_oeb` | input | Output enable bar (BIDIR: 0=drive, 1=hi-z) |
-| `analog[1:0]` | input | {analog_sel, analog_pol} for ANALOG mode |
 
 ## Openframe Interface
 
