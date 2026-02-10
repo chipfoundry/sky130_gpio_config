@@ -16,7 +16,6 @@ module CF_gpio_config #(
   input  wire        io_out,       // Data to drive pad (used in OUTPUT/BIDIR modes)
   output wire        io_in,        // Data from pad (directly from gpio_in)
   input  wire        io_oeb,       // Output enable bar (BIDIR mode: 0=drive, 1=hi-z)
-  input  wire        analog,       // {analog_sel, analog_pol} for ANALOG mode
 
   //-------------------------------------------------------------------------
   // Openframe Interface - From openframe_project_wrapper
