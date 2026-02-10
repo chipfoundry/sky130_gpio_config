@@ -54,8 +54,8 @@ module CF_gpio_config #(
   // Drive Mode (dm[2:0]) - Based on Sky130 pad behavioral model
   //-------------------------------------------------------------------------
   // The Sky130 GPIO pad uses bufif1 primitives with specific strengths:
-  //   dm=010: bufif1(pull1, strong0) - weak 1, strong 0
-  //   dm=011: bufif1(strong1, pull0) - strong 1, weak 0
+  //   dm=110: bufif1(strong1, strong0) - strong 1, strong 0
+  //   dm=111: bufif1(pull1, pull0) - weak 1, weak 0
   //
   // For weak pull behavior:
   //   - Pull-DOWN (read 0 when floating): dm=111 with out=0 gives weak pull to 0
@@ -72,8 +72,8 @@ module CF_gpio_config #(
                    (MODE == MODE_INPUT)    ? {gpio_zero, gpio_zero, gpio_one } :  // 3'b001 
                    (MODE == MODE_INPUT_PD) ? {gpio_one,  gpio_one,  gpio_one } :  // 3'b111 Weak output
                    (MODE == MODE_INPUT_PU) ? {gpio_one,  gpio_one,  gpio_one } :  // 3'b111 Weak output
-                   (MODE == MODE_OUTPUT)   ? {gpio_one,  gpio_one,  gpio_zero} :  // 3'b110
-                   (MODE == MODE_BIDIR)    ? {gpio_one,  gpio_one,  gpio_zero} :  // 3'b110
+                   (MODE == MODE_OUTPUT)   ? {gpio_one,  gpio_one,  gpio_zero} :  // 3'b110 Strong output
+                   (MODE == MODE_BIDIR)    ? {gpio_one,  gpio_one,  gpio_zero} :  // 3'b110 Strong output
                                              {gpio_zero, gpio_zero, gpio_one };   // 3'b001 Default: INPUT
 
   //-------------------------------------------------------------------------
