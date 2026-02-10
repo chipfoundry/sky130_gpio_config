@@ -20,7 +20,7 @@ These signals are set to safe defaults for all modes:
 | Signal | Value | Description |
 |--------|-------|-------------|
 | `gpio_analog_en` | 0 | Enable amuxbus_a/b as ground/power output |
-| `gpio_analog_sel` | 0 | Choose amuxbus_a or amuxbius_b for ground/power |
+| `gpio_analog_sel` | 0 | Choose amuxbus_a or amuxbus_b for ground/power |
 | `gpio_analog_pol` | 0 | Choose ground or power for amuxbus_a/b |
 | `gpio_ib_mode_sel` | 0 | Input buffer mode: VDDIO |
 | `gpio_vtrip_sel` | 0 | Trip point: CMOS |
