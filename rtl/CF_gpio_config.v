@@ -58,13 +58,13 @@ module CF_gpio_config #(
   //   dm=011: bufif1(strong1, pull0) - strong 1, weak 0
   //
   // For weak pull behavior:
-  //   - Pull-DOWN (read 0 when floating): dm=011 with out=0 gives weak pull to 0
-  //   - Pull-UP (read 1 when floating):   dm=010 with out=1 gives weak pull to 1
+  //   - Pull-DOWN (read 0 when floating): dm=111 with out=0 gives weak pull to 0
+  //   - Pull-UP (read 1 when floating):   dm=111 with out=1 gives weak pull to 1
   //
   // MODE_ANALOG:   dm=000 (Hi-Z, analog mode)
   // MODE_INPUT:    dm=001 (Input only, no pull)
-  // MODE_INPUT_PD: dm=011 (Weak pull to 0, requires oeb=0 and out=0)
-  // MODE_INPUT_PU: dm=010 (Weak pull to 1, requires oeb=0 and out=1)
+  // MODE_INPUT_PD: dm=111 (Weak pull to 0, requires oeb=0 and out=0)
+  // MODE_INPUT_PU: dm=111 (Weak pull to 1, requires oeb=0 and out=1)
   // MODE_OUTPUT:   dm=110 (Strong push-pull)
   // MODE_BIDIR:    dm=110 (Strong push-pull, direction from io_oeb)
   //-------------------------------------------------------------------------
