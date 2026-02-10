@@ -57,7 +57,9 @@ The `dm[2:0]` signal controls the Sky130 pad's output driver. The Sky130 GPIO us
 
 | Signal | Width | Direction | Connect to |
 |--------|-------|-----------|------------|
-| `gpio_in` | 1 | input | `gpio_in[n]` from openframe_project_wrapper |
+| `gpio_low` | 1 | input | `gpio_loopback_zero[n]` |
+| `gpio_high` | 1 | input | `gpio_loopback_one[n]` |
+| `gpio_in` | 1 | input | `gpio_in[n]` |
 | `gpio_dm` | 3 | output | `{gpio_dm2[n], gpio_dm1[n], gpio_dm0[n]}` |
 | `gpio_inp_dis` | 1 | output | `gpio_inp_dis[n]` |
 | `gpio_oeb_out` | 1 | output | `gpio_oeb[n]` |
