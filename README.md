@@ -42,14 +42,19 @@ CF_gpio_config #(.MODE(3'd3)) gpio_in_inst (
 
 ## Modes
 
-| MODE | Name | dm | oeb | Description |
-|------|------|----|-----|-------------|
-| 0 | ANALOG | 000 | 1 | Analog mode - disables input and output buffers |
-| 1 | INPUT | 001 | 1 | Digital input, no pull resistor (floating) |
-| 2 | INPUT_PD | 011 | 0 | Digital input with pull-down (~5kΩ) |
-| 3 | INPUT_PU | 010 | 0 | Digital input with pull-up (~5kΩ) |
-| 4 | OUTPUT | 110 | 0 | Digital output, push-pull driver |
-| 5 | BIDIR | 110 | io_oeb | Bidirectional - direction controlled by io_oeb |
+| MODE | Name | gpio_dm | gpio_oeb_out | gpio_out_val | Description |
+|------|------|---------|--------------|--------------|-------------|
+| 0 | ANALOG | 000 | 1 | 0 | Analog mode - disables input and output buffers |
+| 1 | INPUT | 001 | 1 | 0 | Digital input, no pull resistor (floating) |
+| 2 | INPUT_PD | 111 | 0 | 0 | Digital input with pull-down (~5kΩ) |
+| 3 | INPUT_PU | 111 | 0 | 1 | Digital input with pull-up (~5kΩ) |
+| 4 | OUTPUT | 110 | 0 | io_out | Digital output, push-pull driver |
+| 5 | BIDIR | 110 | io_oeb | io_out | Bidirectional - direction controlled by io_oeb |
+
+**Note:** The `gpio_out_val` output handles both user data and pull-mode values automatically:
+- For OUTPUT/BIDIR modes: passes through your `io_out` signal
+- For INPUT_PD: drives 0 to activate weak pull-down
+- For INPUT_PU: drives 1 to activate weak pull-up
 
 ## User Interface
 
@@ -79,11 +84,6 @@ Connect these to your `openframe_project_wrapper` signals:
 | `gpio_vtrip_sel` | `gpio_vtrip_sel[n]` |
 | `gpio_slow_sel` | `gpio_slow_sel[n]` |
 | `gpio_holdover` | `gpio_holdover[n]` |
-
-**Note:** The `gpio_out_val` output handles both user data and pull-mode values automatically:
-- For OUTPUT/BIDIR modes: passes through your `io_out` signal
-- For INPUT_PD: drives 0 to activate weak pull-down
-- For INPUT_PU: drives 1 to activate weak pull-up
 
 ## Files
 
