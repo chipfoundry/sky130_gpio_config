@@ -11,7 +11,7 @@ A simple parameterized GPIO pad configuration wrapper for ChipFoundry Openframe 
 CF_gpio_config #(.MODE(3'd4)) gpio_out_inst (
   .io_out(my_data_out),
   .io_in(),
-  .io_oeb(1'b0),
+  .io_oeb(),
   .gpio_in(gpio_in[5]),
   .gpio_dm({gpio_dm2[5], gpio_dm1[5], gpio_dm0[5]}),
   .gpio_inp_dis(gpio_inp_dis[5]),
@@ -28,9 +28,9 @@ CF_gpio_config #(.MODE(3'd4)) gpio_out_inst (
 
 // GPIO as INPUT with pull-up
 CF_gpio_config #(.MODE(3'd3)) gpio_in_inst (
-  .io_out(1'b0),
+  .io_out(),
   .io_in(my_data_in),
-  .io_oeb(1'b1),
+  .io_oeb(),
   .gpio_in(gpio_in[6]),
   // ... connect config outputs (including gpio_out_val for pull-up)
 );
