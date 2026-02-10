@@ -108,5 +108,5 @@ The `dm[2:0]` signal controls the Sky130 pad's output driver. The Sky130 GPIO us
 - Digital input buffer always enabled (`inp_dis=0`)
 - Strong push-pull driver when enabled (`dm=110`)
 - Direction controlled by `io_oeb`:
-  - `io_oeb=0`: Driving pad with `io_out`
+  - `io_oeb=0`: Driving pad with `io_out`, same logic on `io_in`
   - `io_oeb=1`: Hi-Z, reading pad via `io_in`
