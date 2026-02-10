@@ -56,6 +56,12 @@ CF_gpio_config #(.MODE(3'd3)) gpio_in_inst (
 - For INPUT_PD: drives 0 to activate weak pull-down
 - For INPUT_PU: drives 1 to activate weak pull-up
 
+**Analog Note:**
+- For ANALOG: `CF_gpio_config` does not connect to the actual analog signal - it just configures the gpio. The direct pad connection is `analog_io[N]` or `analog_noesd_io[N]` of the `openframe_project_wrapper`.
+
+**3.3V Note:**
+- Any modes that drive `io_in` at 1.8V also have a 3.3V version of the signal available in `openframe_project_wrapper` as `gpio_in_h[N]`.
+
 ## User Interface
 
 | Signal | Direction | Description |
