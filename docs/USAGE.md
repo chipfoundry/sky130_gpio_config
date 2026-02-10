@@ -19,8 +19,7 @@ CF_gpio_config #(
   // User interface
   .io_out(my_output_data),
   .io_in(),                    // Unused for OUTPUT
-  .io_oeb(1'b0),               // Unused for OUTPUT
-  .analog(2'b00),              // Unused for OUTPUT
+  .io_oeb(),                   // Unused for INPUT/OUTPUT
   
   // From openframe
   .gpio_in(gpio_in[N]),
@@ -29,7 +28,7 @@ CF_gpio_config #(
   .gpio_dm({gpio_dm2[N], gpio_dm1[N], gpio_dm0[N]}),
   .gpio_inp_dis(gpio_inp_dis[N]),
   .gpio_oeb_out(gpio_oeb[N]),
-  .gpio_out_val(gpio_out[N]),  // Connects directly - handles output data and pull values
+  .gpio_out_val(gpio_out[N]),  // Handles output data and pull values
   .gpio_analog_en(gpio_analog_en[N]),
   .gpio_analog_sel(gpio_analog_sel[N]),
   .gpio_analog_pol(gpio_analog_pol[N]),
@@ -46,8 +45,8 @@ CF_gpio_config #(
 |------|----------|
 | `3'd0` (ANALOG) | ADC input, capacitive sensing, analog passthrough |
 | `3'd1` (INPUT) | External signal input, no pull resistor needed |
-| `3'd2` (INPUT_PD) | Button with external pull-up, or default-low input |
-| `3'd3` (INPUT_PU) | Button with external pull-down, or default-high input |
+| `3'd2` (INPUT_PD) | Pad with external pull-up, or default-low input |
+| `3'd3` (INPUT_PU) | Pad with external pull-down, or default-high input |
 | `3'd4` (OUTPUT) | Driving LEDs, signals, always output |
 | `3'd5` (BIDIR) | I2C, bidirectional buses, tri-state capable |
 
@@ -62,9 +61,8 @@ wire led_data;
 
 CF_gpio_config #(.MODE(3'd4)) gpio_led (
   .io_out(led_data),
-  .io_in(),
-  .io_oeb(1'b0),
-  .analog(2'b00),
+  .io_in(),                     // Unused in output mode
+  .io_oeb(),                    // Unused - wrapper drives 0
   .gpio_in(gpio_in[10]),
   .gpio_out_val(gpio_out[10]),  // gpio_out_val passes through io_out
   // ... other config outputs
@@ -79,12 +77,11 @@ For buttons that pull low when pressed:
 wire button_pressed;
 
 CF_gpio_config #(.MODE(3'd3)) gpio_button (
-  .io_out(1'b0),             // Unused - wrapper drives 1 for pull-up
+  .io_out(),                 // Unused - wrapper drives 1 for pull-up, 0 for pull-down
   .io_in(button_pressed),    // Will be 1 when idle, 0 when pressed
-  .io_oeb(1'b1),             // Unused - wrapper drives oeb=0 to enable weak pull
-  .analog(2'b00),
+  .io_oeb(),                 // Unused - wrapper drives oeb=0 to enable weak pull
   .gpio_in(gpio_in[11]),
-  .gpio_out_val(gpio_out[11]),  // Drives 1 to activate ~5kΩ pull-up
+  .gpio_out_val(gpio_out[11]),  // Drives 1 to activate ~5kΩ pull-up, 0 to activate ~5KΩ pull-down
   // ... other config outputs
 );
 ```
@@ -107,7 +104,6 @@ CF_gpio_config #(.MODE(3'd5)) gpio_sda (
   .io_out(sda_out),
   .io_in(sda_in),
   .io_oeb(sda_oeb),
-  .analog(2'b00),
   .gpio_in(gpio_in[12]),
   .gpio_out_val(gpio_out[12]),  // Passes through sda_out
   // ... other config outputs
@@ -119,13 +115,11 @@ CF_gpio_config #(.MODE(3'd5)) gpio_sda (
 For analog functions:
 
 ```verilog
-wire [1:0] analog_config;  // {sel, pol}
 
 CF_gpio_config #(.MODE(3'd0)) gpio_analog (
-  .io_out(1'b0),
-  .io_in(),
-  .io_oeb(1'b1),
-  .analog(analog_config),
+  .io_out(),            // Unused in analog mode
+  .io_in(),             // Unused in analog mode
+  .io_oeb(),            // Unused in analog mode
   .gpio_in(gpio_in[13]),
   // ... config outputs
 );
@@ -133,7 +127,7 @@ CF_gpio_config #(.MODE(3'd0)) gpio_analog (
 
 ## Multiple GPIOs with Generate
 
-For arrays of GPIOs with the same mode:
+For arrays of GPIOs with the same mode: the example drives `gpio[10:17]`
 
 ```verilog
 genvar i;
@@ -142,8 +136,7 @@ generate
     CF_gpio_config #(.MODE(3'd4)) gpio_inst (
       .io_out(my_outputs[i]),
       .io_in(),
-      .io_oeb(1'b0),
-      .analog(2'b00),
+      .io_oeb(),
       .gpio_in(gpio_in[i+10]),
       .gpio_dm({gpio_dm2[i+10], gpio_dm1[i+10], gpio_dm0[i+10]}),
       .gpio_inp_dis(gpio_inp_dis[i+10]),
